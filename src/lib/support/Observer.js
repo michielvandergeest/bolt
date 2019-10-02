@@ -28,11 +28,9 @@ export default (config = {}, context) => {
   if (config.computed) {
     Object.keys(config.computed).forEach(key => {
       Computed(() => {
-        console.log('Computed for', key)
         Object.defineProperty(Data, key, {
           get() {
             let internalValue = config.computed[key].apply(context)
-            console.log('Get computed for', key, internalValue)
             config.watch && config.watch[key] && config.watch[key].call(context, internalValue)
             return internalValue
           },
