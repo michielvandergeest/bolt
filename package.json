@@ -1,0 +1,37 @@
+{
+  "name": "bolt",
+  "version": "0.0.1",
+  "description": "An experimental, opinionated, micro framework that attempts to simplify building Lightning Apps",
+  "author": "Michiel van der Geest <m.van.der.geest@metrological.com>",
+  "license": "Apache-2.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "dependencies": {
+    "deepmerge": "^4.0.0",
+    "wpe-lightning": "github:WebPlatformForEmbedded/Lightning#fix/fireAncestors"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.6.2",
+    "@babel/preset-env": "^7.6.2",
+    "babel-eslint": "^10.0.3",
+    "eslint": "^6.5.1",
+    "eslint-config-prettier": "^6.3.0",
+    "eslint-plugin-prettier": "^3.1.1",
+    "husky": "^3.0.8",
+    "lint-staged": "^9.4.1",
+    "prettier": "^1.18.2"
+  }
+}
