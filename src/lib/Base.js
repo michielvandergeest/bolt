@@ -36,7 +36,9 @@ export default SuperClass => {
       const actionKeys = this.config.actions && Object.keys(this.config.actions)
       if (actionKeys) {
         actionKeys.forEach(key => {
-          this.constructor.prototype[key] = this.config.actions[key]
+          this.constructor.prototype[key] = (...args) => {
+            this.config.actions[key].apply(this, args)
+          }
         })
       }
     }
