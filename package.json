@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "deepmerge": "^4.0.0",
-    "wpe-lightning": "github:WebPlatformForEmbedded/Lightning#fix/fireAncestors"
+    "wpe-lightning": "github:WebPlatformForEmbedded/Lightning"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",
