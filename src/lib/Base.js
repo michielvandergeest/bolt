@@ -24,7 +24,7 @@ export default SuperClass => {
         )
 
         // add a $goTo method that can be called via fireAncestors
-        this.constructor.prototype['$goTo'] = function() {
+        this.constructor.prototype.$goTo = function() {
           return (
             (this.$router && this.$router.go(...arguments)) ||
             this.fireAncestors('$goTo', ...arguments)
@@ -35,10 +35,15 @@ export default SuperClass => {
       // Set up actions when defined
       const actionKeys = this.config.actions && Object.keys(this.config.actions)
       if (actionKeys) {
+        // overwriting the _hasMethod to not only look at the prototype but also current instance
+        // maybe this could be changed in Lightning core?
+        this._hasMethod = function(name) {
+          const member = this.constructor.prototype[name] || this[name]
+          return !!member && typeof member === 'function'
+        }
+        // register the methods
         actionKeys.forEach(key => {
-          this.constructor.prototype[key] = (...args) => {
-            this.config.actions[key].apply(this, args)
-          }
+          this[key] = this.config.actions[key]
         })
       }
     }
