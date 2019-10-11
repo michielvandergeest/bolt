@@ -56,7 +56,17 @@ export default SuperClass => {
     }
 
     exec(func) {
-      return func && typeof func === 'function' ? func.apply(this) : false
+      // single function
+      if (func && typeof func === 'function') {
+        return func.apply(this)
+      }
+      // array of functions
+      else if (func && Array.isArray(func)) {
+        return func.forEach(f => {
+          return f.apply(this)
+        })
+      }
+      return false
     }
   }
 }
