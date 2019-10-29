@@ -4,7 +4,7 @@ export default (routes, options, context) => {
   return {
     go(to, params) {
       const route = routes[to]
-      console.log('BOLT router::go', to, params, context.config.name)
+
       if (route) {
         history.push({
           to,
