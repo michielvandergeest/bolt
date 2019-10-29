@@ -30,6 +30,14 @@ export default SuperClass => {
             this.fireAncestors('$goTo', ...arguments)
           )
         }
+
+        // add a $goBack method that can be called via fireAncestors
+        this.constructor.prototype.$goBack = function() {
+          return (
+            (this.$router && this.$router.back(...arguments)) ||
+            this.fireAncestors('$goBack', ...arguments)
+          )
+        }
       }
 
       // Set up actions when defined

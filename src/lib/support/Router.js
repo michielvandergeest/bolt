@@ -1,9 +1,16 @@
 export default (routes, options, context) => {
+  const history = []
+
   return {
     go(to, params) {
       const route = routes[to]
-
+      console.log('BOLT router::go', to, params, context.config.name)
       if (route) {
+        history.push({
+          to,
+          params,
+        })
+
         if (context.config.debug) {
           console.log('Routing to', to)
         }
@@ -48,6 +55,8 @@ export default (routes, options, context) => {
 
         setFocus(component, target, context, options.onChange, to)
 
+        // to force active being called, even if we route to the same page (with new params)
+        component.alpha = 0
         component.enterRouter()
 
         exitSiblingComponents(component, target)
@@ -57,6 +66,13 @@ export default (routes, options, context) => {
         console.log('Route ' + to + ' not found ...')
         return false
       }
+    },
+    back(params) {
+      const previous = history.splice(-2, 2).shift()
+      if (previous) {
+        return this.go(previous.to, { ...previous.params, ...params })
+      }
+      return false
     },
   }
 }
