@@ -63,6 +63,11 @@ export default SuperClass => {
       return this
     }
 
+    // remap _refocus to refocus
+    refocus() {
+      this._refocus()
+    }
+
     exec(func) {
       // single function
       if (func && typeof func === 'function') {

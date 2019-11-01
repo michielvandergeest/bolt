@@ -6,6 +6,7 @@ let i = 0
 
 const defaults = {
   debug: false,
+  lazy: true, // or not lazy by default?
   template: {
     w: w => w,
     h: h => h,
