@@ -1,7 +1,7 @@
 export default SuperClass => {
   return class BoltTemplate extends SuperClass {
     _setup() {
-      this.templateCreated = false
+      this.mounted = false
 
       if (this.config.lazy === true) {
         // only set the position and dimension part of the template (in order know when first active)
@@ -24,20 +24,22 @@ export default SuperClass => {
         }
       } else {
         this.patch(this.config.template)
-        this.templateCreated = true
+        this.mounted = true
+        this.exec(this.config.events.mounted)
         if (this.config.debug === true) {
-          console.log(this.config.name + ' template created during setup')
+          console.log(this.config.name + ' template mounted during setup')
         }
       }
       super._setup()
     }
 
     _focus() {
-      if (this.templateCreated === false) {
+      if (this.mounted === false) {
         this.patch(this.config.template)
-        this.templateCreated = true
+        this.mounted = true
+        this.exec(this.config.events.mounted)
         if (this.config.debug === true) {
-          console.log(this.config.name + ' template created during focus')
+          console.log(this.config.name + ' template mounted during focus')
         }
         this._refocus()
       }
@@ -45,11 +47,12 @@ export default SuperClass => {
     }
 
     _firstActive() {
-      if (this.templateCreated === false) {
+      if (this.mounted === false) {
         this.patch(this.config.template)
-        this.templateCreated = true
+        this.mounted = true
+        this.exec(this.config.events.mounted)
         if (this.config.debug === true) {
-          console.log(this.config.name + ' template created during firstActive')
+          console.log(this.config.name + ' template mounted during firstActive')
         }
       }
       super._firstActive()
