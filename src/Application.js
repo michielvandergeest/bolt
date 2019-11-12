@@ -6,6 +6,9 @@ const defaults = {
   name: 'App',
   fonts: [],
   preload: [],
+  template: {
+    color: 0x00000000,
+  },
 }
 
 export default function() {
@@ -17,8 +20,7 @@ export default function() {
         w: 1920,
         h: 1080,
         rect: true,
-        colorTop: 0xff000000,
-        colorBottom: 0xff222222,
+        color: 0xff000000,
         children: [Loader], // maybe make loader configurable?
         Preload: { alpha: 0.000001 },
       }
@@ -33,10 +35,14 @@ export default function() {
         // - more ?
       ])
         .then(() => {
-          console.log('everything loaded')
           setTimeout(() => {
-            this.children = [App] //, MediaPlayer
+            // First add the app
+            this.childList.a(App) //, MediaPlayer
             super._setup()
+            // then remove the loader (at position 0)
+            setTimeout(() => {
+              this.childList.removeAt(0)
+            }, 1000)
           }, 1000)
         })
         .catch(console.error)
