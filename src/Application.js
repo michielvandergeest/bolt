@@ -1,6 +1,7 @@
 import lng from 'wpe-lightning'
 import Component from './Component'
 import Loader from './components/Loader'
+import Deepmerge from 'Deepmerge'
 
 const defaults = {
   name: 'App',
@@ -11,10 +12,42 @@ const defaults = {
   },
 }
 
+const defaultOptions = {
+  stage: { w: 1920, h: 1080, clearColor: 0x00000000, canvas2d: false },
+  debug: false,
+  defaultFontFace: 'RobotoRegular',
+  keys: {
+    8: 'Back',
+    13: 'Enter',
+    27: 'Menu',
+    37: 'Left',
+    38: 'Up',
+    39: 'Right',
+    40: 'Down',
+    174: 'ChannelDown',
+    175: 'ChannelUp',
+    178: 'Stop',
+    250: 'PlayPause',
+    191: 'Search', // Use "/" for keyboard
+    409: 'Search',
+  },
+}
+
+if (window.innerHeight === 720) {
+  defaultOptions.stage['w'] = 1280
+  defaultOptions.stage['h'] = 720
+  defaultOptions.stage['precision'] = 0.6666666667
+}
+
 export default function() {
   const App = Component(defaults, ...arguments)
 
   return class BoltApplication extends lng.Application {
+    constructor(options) {
+      const config = Deepmerge(defaultOptions, options)
+      super(config)
+    }
+
     static _template() {
       return {
         w: 1920,
@@ -35,14 +68,12 @@ export default function() {
         // - more ?
       ])
         .then(() => {
+          // First add the app
+          this.childList.a(App) //, MediaPlayer
+          super._setup()
+          // then remove the loader (at position 0)
           setTimeout(() => {
-            // First add the app
-            this.childList.a(App) //, MediaPlayer
-            super._setup()
-            // then remove the loader (at position 0)
-            setTimeout(() => {
-              this.childList.removeAt(0)
-            }, 1000)
+            this.childList.removeAt(0)
           }, 1000)
         })
         .catch(console.error)
