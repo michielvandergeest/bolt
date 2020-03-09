@@ -16,7 +16,7 @@ export default (routes, options, context) => {
         }
 
         const target = getTarget(options.target, context)
-        // try to find the component
+
         let component = getComponent(target, route.ref)
 
         // if not add it
@@ -97,6 +97,9 @@ const getComponent = (target, ref) => {
 const setFocus = (component, target, context, onChange, to) => {
   const focusPoint = target.constructor.name === 'ElementChildList' ? context : target
 
+  if (!focusPoint.config) {
+    focusPoint.config = {}
+  }
   focusPoint.config.delegateFocus = () => {
     return component
   }
@@ -110,6 +113,9 @@ const setFocus = (component, target, context, onChange, to) => {
 }
 
 const addComponent = (target, route) => {
+  // ensure there is a ref
+  if (!route.ref) route.ref = route.config.name
+
   // childlist uses 'a' and a normal component uses 'add'
   return target.constructor.name === 'ElementChildList' ? target.a(route) : target.add(route)
 }

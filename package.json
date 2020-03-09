@@ -20,8 +20,8 @@
     }
   },
   "dependencies": {
-    "deepmerge": "^4.0.0",
-    "wpe-lightning": "github:WebPlatformForEmbedded/Lightning"
+    "deepmerge": "^4.2.2",
+    "wpe-lightning": "^1.6.1"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",

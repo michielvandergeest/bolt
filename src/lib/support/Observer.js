@@ -22,6 +22,13 @@ export default (config = {}, context) => {
           dep.notify()
         },
       })
+
+      // call watch function directly (but in the next tick)
+      setTimeout(() => {
+        if (config.watch && config.watch[key]) {
+          config.watch[key].call(context, internalValue)
+        }
+      })
     })
   }
 

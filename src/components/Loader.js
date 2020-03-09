@@ -1,5 +1,5 @@
 import Component from '../Component'
-import lng from 'wpe-lightning'
+import Lightning from 'wpe-lightning'
 
 const size = 24
 
@@ -17,16 +17,16 @@ export default Component({
       x: w => w / 2,
       y: h => h / 1.8,
       Bullet1: {
-        texture: lng.Tools.getRoundRect(size, size, size / 2, 0, null, true, 0xffffffff),
+        texture: Lightning.Tools.getRoundRect(size, size, size / 2, 0, null, true, 0xffffffff),
         alpha: 0.2,
       },
       Bullet2: {
-        texture: lng.Tools.getRoundRect(size, size, size / 2, 0, null, true, 0xffffffff),
+        texture: Lightning.Tools.getRoundRect(size, size, size / 2, 0, null, true, 0xffffffff),
         x: size + size / 2,
         alpha: 0.2,
       },
       Bullet3: {
-        texture: lng.Tools.getRoundRect(size, size, size / 2, 0, null, true, 0xffffffff),
+        texture: Lightning.Tools.getRoundRect(size, size, size / 2, 0, null, true, 0xffffffff),
         x: (size + size / 2) * 2,
         alpha: 0.2,
         color: 0xffffffff,

@@ -1,4 +1,4 @@
-import lng from 'wpe-lightning'
+import Lightning from 'wpe-lightning'
 import Component from './Component'
 import Loader from './components/Loader'
 import Deepmerge from 'Deepmerge'
@@ -42,7 +42,7 @@ if (window.innerHeight === 720) {
 export default function() {
   const App = Component(defaults, ...arguments)
 
-  return class BoltApplication extends lng.Application {
+  return class BoltApplication extends Lightning.Application {
     constructor(options) {
       const config = Deepmerge(defaultOptions, options)
       super(config)
