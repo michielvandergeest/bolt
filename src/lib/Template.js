@@ -23,8 +23,6 @@ export default SuperClass => {
           })
         )
 
-        // console.log('template', this.config.name, this.config.template)
-
         this.constructor.parsedTemplates[this.componentId] = this.constructor.parseTemplate(
           this.config.template
         )
@@ -38,12 +36,6 @@ export default SuperClass => {
       this.constructor.parsedTemplates[this.componentId].f(
         this,
         this.constructor.parsedTemplates[this.componentId].a
-      )
-
-      console.log(
-        'parsed templates',
-        this.componentId,
-        this.constructor.parsedTemplates[this.componentId]
       )
 
       // if lazy is enabled, only set the position and dimension
