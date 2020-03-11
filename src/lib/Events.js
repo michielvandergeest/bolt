@@ -37,6 +37,7 @@ export default SuperClass => {
     }
 
     _firstActive() {
+      super._firstActive()
       this.exec(this.config.events.firstActive)
     }
 

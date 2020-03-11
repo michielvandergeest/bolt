@@ -12,9 +12,7 @@ const defaults = {
     h: h => h,
   },
   events: {},
-  data: {},
   keys: {},
-  actions: {},
 }
 
 class BoltComponent extends Bolt(Lightning.Component) {}

@@ -4,11 +4,6 @@ import Observer from './support/Observer'
 export default SuperClass => {
   return class BoltBase extends SuperClass {
     _setup() {
-      // Set reactive data
-      this.data = Observer(
-        { data: this.config.data, computed: this.config.computed, watch: this.config.watch },
-        this
-      )
       // Create a params object
       this.params = {}
 
@@ -39,21 +34,12 @@ export default SuperClass => {
           )
         }
       }
+    }
 
-      // Set up actions when defined
-      const actionKeys = this.config.actions && Object.keys(this.config.actions)
-      if (actionKeys) {
-        // overwriting the _hasMethod to not only look at the prototype but also current instance
-        // maybe this could be changed in Lightning core?
-        this._hasMethod = function(name) {
-          const member = this.constructor.prototype[name] || this[name]
-          return !!member && typeof member === 'function'
-        }
-        // register the methods
-        actionKeys.forEach(key => {
-          this[key] = this.config.actions[key]
-        })
-      }
+    _firstActive() {
+      this.reactiveData()
+      this.setupActions()
+      super._firstActive()
     }
 
     _getFocused() {
@@ -80,6 +66,37 @@ export default SuperClass => {
         })
       }
       return false
+    }
+
+    get data() {
+      if (this._data) return this._data
+      else return Object.assign(this.config.data || {})
+    }
+
+    reactiveData() {
+      if (this.config.data && !this._data) {
+        this._data = Observer(
+          { data: this.config.data, computed: this.config.computed, watch: this.config.watch },
+          this
+        )
+      }
+    }
+
+    setupActions() {
+      // Set up actions when defined
+      const actionKeys = this.config.actions && Object.keys(this.config.actions)
+      if (actionKeys) {
+        // overwriting the _hasMethod to not only look at the prototype but also current instance
+        // maybe this could be changed in Lightning core?
+        this._hasMethod = function(name) {
+          const member = this.constructor.prototype[name] || this[name]
+          return !!member && typeof member === 'function'
+        }
+        // register the methods
+        actionKeys.forEach(key => {
+          this[key] = this.config.actions[key]
+        })
+      }
     }
   }
 }

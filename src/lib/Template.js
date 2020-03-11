@@ -1,5 +1,4 @@
 import Deepmerge from 'deepmerge'
-import slugify from './support/slugify'
 
 export default SuperClass => {
   return class BoltTemplate extends SuperClass {
@@ -10,8 +9,7 @@ export default SuperClass => {
 
     _setup() {
       super._setup()
-
-      this.componentId = slugify(this.config.id)
+      this.componentId = this.config.id
 
       this.mounted = false
       // first see if we have a parsed a templated for this id
@@ -70,13 +68,13 @@ export default SuperClass => {
     }
 
     _firstActive() {
+      super._firstActive()
       if (this.mounted === false) {
         this.patchAndMount()
         if (this.config.debug === true) {
           console.log(this.config.name + ' template patched and mounted during firstActive')
         }
       }
-      super._firstActive()
     }
 
     patchAndMount() {
