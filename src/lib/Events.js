@@ -50,6 +50,7 @@ export default SuperClass => {
     }
 
     _focus() {
+      super._focus()
       if (this.config.debug === true) {
         console.log(this.config.name + ' received focus')
       }

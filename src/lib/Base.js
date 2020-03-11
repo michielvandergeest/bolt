@@ -4,6 +4,7 @@ import Observer from './support/Observer'
 export default SuperClass => {
   return class BoltBase extends SuperClass {
     _setup() {
+      this.actionsFlag = false // bit ugly
       // Create a params object
       this.params = {}
 
@@ -37,6 +38,12 @@ export default SuperClass => {
     }
 
     _firstActive() {
+      this.reactiveData()
+      this.setupActions()
+      super._firstActive()
+    }
+
+    _focus() {
       this.reactiveData()
       this.setupActions()
       super._firstActive()
@@ -83,6 +90,7 @@ export default SuperClass => {
     }
 
     setupActions() {
+      if (this.actionsFlag === true) return
       // Set up actions when defined
       const actionKeys = this.config.actions && Object.keys(this.config.actions)
       if (actionKeys) {
@@ -96,6 +104,8 @@ export default SuperClass => {
         actionKeys.forEach(key => {
           this[key] = this.config.actions[key]
         })
+
+        this.actionsFlag = true
       }
     }
   }
