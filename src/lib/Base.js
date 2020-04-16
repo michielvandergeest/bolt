@@ -15,6 +15,7 @@ export default SuperClass => {
           {
             target: (this.config.router && this.config.router.target) || this.childList,
             onChange: (this.config.router && this.config.router.onChange) || null,
+            beforeChange: (this.config.router && this.config.router.beforeChange) || null,
           },
           this
         )
@@ -47,6 +48,12 @@ export default SuperClass => {
       this.reactiveData()
       this.setupActions()
       super._firstActive()
+    }
+
+    _detach() {
+      // to look into: what about nested children
+      this.children = []
+      delete this._data
     }
 
     _getFocused() {

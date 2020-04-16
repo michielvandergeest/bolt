@@ -21,6 +21,7 @@ export default SuperClass => {
     }
 
     _detach() {
+      super._detach()
       this.exec(this.config.events.detach)
     }
 

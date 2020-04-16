@@ -5,6 +5,8 @@ export default (routes, options, context) => {
     go(to, params) {
       const route = routes[to]
 
+      const from = history.slice(-1)[0]
+
       if (route) {
         history.push({
           to,
@@ -17,13 +19,20 @@ export default (routes, options, context) => {
 
         const target = getTarget(options.target, context)
 
+        if (from) {
+          let fromComponent = getComponent(target, from.to)
+          if (options.beforeChange && typeof options.beforeChange === 'function') {
+            options.beforeChange.apply(context, [from.to, fromComponent])
+          }
+        }
+
         let component = getComponent(target, route.ref)
 
         // if not add it
         if (!component) {
           component = addComponent(target, route)
 
-          component.constructor.prototype.enterRouter = function() {
+          component.constructor.prototype.enterRoute = function() {
             if (context.config.debug) {
               console.log('Entering route ' + to)
             }
@@ -57,7 +66,7 @@ export default (routes, options, context) => {
 
         // to force active being called, even if we route to the same page (with new params)
         component.alpha = 0
-        component.enterRouter()
+        component.enterRoute()
 
         exitSiblingComponents(component, target)
 
