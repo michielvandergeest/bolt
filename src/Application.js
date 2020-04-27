@@ -1,7 +1,7 @@
 import Lightning from 'wpe-lightning'
 import Component from './Component'
 import Loader from './components/Loader'
-import Deepmerge from 'Deepmerge'
+import Deepmerge from 'deepmerge'
 
 const defaults = {
   name: 'App',
